@@ -1,0 +1,444 @@
+WindowManager:
+    InputWindow:
+    ShearWindow:
+    MomentWindow:
+    AxialWindow:
+    DeflectionWindow:
+
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<BackgroundLabel@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+
+<MomentButton@Button>
+    size_hint: (0.2, 0.2)
+    text: "Bending Moment graph"
+    on_release: app.root.current = "Moment"
+
+<AxialButton@Button>
+    size_hint: (0.2, 0.2)
+    text: "Axial Stress graph"
+    on_release: app.root.current = "Axial"
+
+<ShearButton@Button>
+    size_hint: (0.2, 0.2)
+    text: "Shear stress graph"
+    on_release: app.root.current = "Shear"
+
+<DeflectionButton@Button>
+    size_hint: (0.2, 0.2)
+    text: "Deflection graph"
+    on_release: app.root.current = "Deflection"
+
+<Indeterminate_load>
+    Label:
+        text: "At least either a Fixed support or a Pin Support (with another) are required"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Lengthchange_Error>
+    Label:
+        text: "Length can't be changed after it has been entered"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Non_Float_Error>
+    Label:
+        text: "Only numbers are allowed"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Length_Error>
+    Label:
+        text: "The length inputted must be greater than 0"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Position_Error>
+    Label:
+        text: "The distance inputted must be between 0 and the length of the beam"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Before_Length_Error>
+    Label:
+        text: "A length must be specified before adding supports or loads"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Non_Equation_Error>
+    Label:
+        text: "Only numbers are allowed"
+        size_hint: (1,1)
+        pos_hint: {'x':0,'y':0}
+
+<Support_Input>
+    support_dis: support_dis_input
+    Label:
+        text: "Distance from LHS of support (m)"
+        size_hint:(1, 0.3)
+        pos_hint: {'top': 1, 'x': 0}
+    TextInput:
+        size_hint: (1, 0.3)
+        pos_hint: {'y': 0.4, 'x': 0}
+        id: support_dis_input
+    Button:
+        size_hint: (1, 0.4)
+        pos_hint: {'y': 0, 'x': 0}
+        text: "Input Support"
+        on_release: root.inputsupport()
+
+<Moment_Input>
+    moment_mag: moment_mag_input
+    moment_dis: moment_dis_input
+    Label:
+        size_hint: (0.5, 0.3)
+        pos_hint: {'top': 1, 'x': 0}
+        text: "Distance from LHS of moment (m)"
+    TextInput:
+        id: moment_dis_input
+        pos_hint: {'top': 1, 'x': 0.5}
+        size_hint: (0.5, 0.3)
+    Label:
+        size_hint: (0.5, 0.3)
+        pos_hint: {'x': 0, 'y': 0.4}
+        text: "Magnitude of Moment (kNm)"
+    TextInput:
+        id: moment_mag_input
+        pos_hint: {'x': 0.5, 'y': 0.4}
+        size_hint: (0.5, 0.3)
+    Button:
+        pos_hint: {'x': 0, 'y': 0}
+        size_hint: (1, 0.4)
+        text: "Input Moment"
+        on_release: root.inputmoment()
+
+<Point_Input>
+    point_mag: point_mag_input
+    point_dis: point_dis_input
+    point_angle: point_angle_input
+
+    Label:
+        size_hint: (0.5, 0.25)
+        pos_hint: {'top': 1, 'x': 0}
+        text: "Distance from LHS of load (m)"
+    TextInput:
+        id: point_dis_input
+        pos_hint: {'top': 1, 'x': 0.5}
+        size_hint: (0.5, 0.25)
+    Label:
+        size_hint: (0.5, 0.25)
+        pos_hint: {'x': 0, 'y': 0.5}
+        text: "Magnitude of Point Load (kN)"
+    TextInput:
+        id: point_mag_input
+        pos_hint: {'x': 0.5, 'y': 0.5}
+        size_hint: (0.5, 0.25)
+    Label:
+        text: "Angle of Point load (degrees)"
+        size_hint: (0.5, 0.25)
+        pos_hint: {'x': 0 , 'y': 0.25}
+    TextInput:
+        id: point_angle_input
+        size_hint: (0.5, 0.25)
+        pos_hint: {'x': 0.5 , 'y': 0.25}
+    Button:
+        pos_hint: {'x': 0, 'y': 0}
+        size_hint: (1, 0.25)
+        text: "Input Point Load"
+        on_release: root.inputpoint()
+
+<Distributed_Input>
+    dis_start: dis_start_input
+    dis_end: dis_end_input
+    dis_startv: dis_startv_input
+    dis_endv: dis_endv_input
+
+    Label:
+        text: "Distributed Load Start (from LHS in m)"
+        size_hint: (0.5, 0.25)
+        pos_hint: {'top': 1, 'x': 0}
+
+    TextInput:
+        id: dis_start_input
+        size_hint: (0.5, 0.25)
+        pos_hint: {'top': 1, 'x': 0.5}
+
+    Label:
+        text: "Distributed Load End (from LHS in m)"
+        pos_hint: {'y': 0.5, 'x': 0}
+        size_hint: (0.5, 0.25)
+
+    TextInput:
+        id: dis_end_input
+        pos_hint: {'y': 0.5, 'x': 0.5}
+        size_hint: (0.5, 0.25)
+
+    Label:
+        text: "Start value (kN)"
+        pos_hint: {'y': 0.25, 'x': 0}
+        size_hint: (0.25, 0.25)
+
+    TextInput:
+        id: dis_startv_input
+        pos_hint: {'y': 0.25, 'x': 0.25}
+        size_hint: (0.25, 0.25)
+
+    Label:
+        text: "End value (kN)"
+        pos_hint: {'y': 0.25, 'x': 0.5}
+        size_hint: (0.25, 0.25)
+
+    TextInput:
+        id: dis_endv_input
+        pos_hint: {'y': 0.25, 'x': 0.75}
+        size_hint: (0.25, 0.25)
+
+    Button:
+        text: "Input distributed loads"
+        pos_hint: {'y': 0, 'x': 0}
+        size_hint: (1, 0.25)
+        on_release: root.inputdis()
+
+<InputWindow>:
+    on_enter: root.clear()
+
+    name: "input"
+    length: lengthinput
+
+    FloatLayout:
+
+        BackgroundLabel:
+            pos_hint: {'top': 1,'x': 0}
+            size_hint: (0.6, 0.15)
+            background_color: 0.1, 0.0, 0.6, 1
+            text: "Current Beam"
+
+        Button:
+            pos_hint: {'x':0, 'y':0.75}
+            size_hint: (0.2,0.1)
+            text: "Update Drawing"
+            on_release: root.update_drawing()
+
+        Button:
+            pos_hint: {'x':0.4, 'y':0.75}
+            size_hint: (0.2, 0.1)
+            text: "Reset"
+            on_release: root.clear()
+
+        BackgroundLabel:
+            pos_hint: {'top': 1,'x': 0.6}
+            size_hint: (0.4, 0.15)
+            background_color: 0, 0.4, 0.5, 1
+            text: "Input:"
+
+        GridLayout:
+            size_hint: (0.4, 0.65)
+            pos_hint: {'x': 0.6, 'y': 0.2}
+            cols: 2
+
+            Button:
+                text: "Fixed Support"
+                on_release: root.supportbtn("Fixed")
+
+            Button:
+                text: "Pin Support"
+                on_release: root.supportbtn("Pin")
+
+            Button:
+                text: "Roller Support"
+                on_release: root.supportbtn("Roller")
+
+            Button:
+                on_release: root.pointbtn()
+                text: "Point Load"
+
+            Button:
+                text: "Moment"
+                on_release: root.momentbtn()
+
+            Button:
+                on_release: root.DLbtn()
+                text: "Distributed Load"
+
+            Button:
+                text: "Length (m) :"
+                on_release: root.lengthbtn()
+
+            TextInput:
+                id: lengthinput
+
+        Button:
+            pos_hint: {'x': 0.6, 'y':0}
+            size_hint: (0.4, 0.2)
+            text: "Calculate"
+            on_release: root.load_check()
+
+
+<ShearWindow>:
+    name: "Shear"
+    min_value: min_value
+    max_value: max_value
+
+    on_enter: root.eqprint()
+
+    FloatLayout:
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.8}
+            size_hint: (0.2, 0.1)
+            id: min_value
+
+        Label:
+            pos_hint: {'x': 0.0, 'y':0.0}
+            size_hint: (0.7, 0.05)
+            text: "Negative: Shear stress is downwards | Positive: Shear stress is upwards"
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.9}
+            size_hint: (0.2, 0.1)
+            id: max_value
+
+        AxialButton:
+            pos_hint: {'x': 0.8, 'y': 0.6}
+
+        MomentButton:
+            pos_hint: {'x': 0.8, 'y': 0.4}
+
+        DeflectionButton:
+            pos_hint: {'x': 0.8, 'y': 0.2}
+
+        Button:
+            pos_hint: {'x': 0.8, 'y': 0}
+            size_hint: (0.2, 0.2)
+            text: "Calculate Another Beam"
+            on_release: app.root.current = "input"
+
+<MomentWindow>:
+    name: "Moment"
+    min_value: min_value
+    max_value: max_value
+
+    on_enter: root.eqprint()
+
+    FloatLayout:
+
+        Label:
+            pos_hint: {'x': 0.0, 'y':0.0}
+            size_hint: (0.7, 0.05)
+            text: "Negative: Hogging (curves in U shape) | Positive: Sagging (curves in n shape)"
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.8}
+            size_hint: (0.2, 0.1)
+            id: min_value
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.9}
+            size_hint: (0.2, 0.1)
+            id: max_value
+
+        ShearButton:
+            pos_hint: {'x': 0.8, 'y': 0.4}
+
+        AxialButton:
+            pos_hint: {'x': 0.8, 'y': 0.6}
+
+        DeflectionButton:
+            pos_hint: {'x': 0.8, 'y': 0.2}
+
+        Button:
+            pos_hint: {'x': 0.8, 'y': 0}
+            size_hint: (0.2, 0.2)
+            text: "Calculate Another Beam"
+            on_release: app.root.current = "input"
+
+
+
+<DeflectionWindow>:
+    name: "Deflection"
+    min_value: min_value
+    max_value: max_value
+
+    on_enter: root.eqprint()
+
+    FloatLayout:
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.8}
+            size_hint: (0.2, 0.1)
+            id: min_value
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.9}
+            size_hint: (0.2, 0.1)
+            id: max_value
+
+        Label:
+            pos_hint: {'x': 0.0, 'y':0.0}
+            size_hint: (0.7, 0.05)
+            text: "Negative: Distance deflected below beam | Positive: Distance deflected above beam"
+
+        ShearButton:
+            pos_hint: {'x': 0.8, 'y': 0.4}
+
+        MomentButton:
+            pos_hint: {'x': 0.8, 'y': 0.2}
+
+        AxialButton:
+            pos_hint: {'x': 0.8, 'y': 0.6}
+
+        Button:
+            pos_hint: {'x': 0.8, 'y': 0}
+            size_hint: (0.2, 0.2)
+            text: "Calculate Another Beam"
+            on_release: app.root.current = "input"
+
+<AxialWindow>:
+    name: "Axial"
+    min_value: min_value
+    max_value: max_value
+
+    on_enter: root.eqprint()
+
+    FloatLayout:
+
+        Label:
+            pos_hint: {'x': 0.0, 'y':0.0}
+            size_hint: (0.7, 0.05)
+            text: "Negative: Axial stress is towards LHS | Positive: Axial stress is towards RHS"
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.8}
+            size_hint: (0.2, 0.1)
+            id: min_value
+
+        Label:
+            pos_hint: {'x': 0.8, 'y': 0.9}
+            size_hint: (0.2, 0.1)
+            id: max_value
+
+        ShearButton:
+            pos_hint: {'x': 0.8, 'y': 0.6}
+
+        MomentButton:
+            pos_hint: {'x': 0.8, 'y': 0.4}
+
+        DeflectionButton:
+            pos_hint: {'x': 0.8, 'y': 0.2}
+
+        Button:
+            pos_hint: {'x': 0.8, 'y': 0}
+            size_hint: (0.2, 0.2)
+            text: "Calculate Another Beam"
+            on_release: app.root.current = "input"
+
+
+
