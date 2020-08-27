@@ -2,9 +2,6 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty
-from kivy.config import Config
-
-Config.set('kivy', 'keyboard_mode', 'dock')
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
